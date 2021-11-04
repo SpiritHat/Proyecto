@@ -1,5 +1,5 @@
 <?php
-if(isset($_POST['DNI']) && !empty($_POST['DNI'])&& isset($_POST['password']) && !empty($_POST['password'])){
+if(isset($_POST['DNI']) && !empty($_POST['DNI']) && isset($_POST['password']) && !empty($_POST['password'])){
     require_once '../modelo/mysql.php';
     $DNI=$_POST['DNI'];
     $password=$_POST['password'];
@@ -11,7 +11,7 @@ if(isset($_POST['DNI']) && !empty($_POST['DNI'])&& isset($_POST['password']) && 
     $mysql->desconectar();
 }
 if (mysqli_num_rows($consulta)>0){
-    header("location: ../inicioAdmon.html");
+    header("location: ../inicioAdmon.php");
 }
 else {
   header("location: ../loginAdmon.html");

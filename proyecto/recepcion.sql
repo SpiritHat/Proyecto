@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2021 a las 16:41:13
+-- Tiempo de generación: 04-11-2021 a las 14:39:06
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -41,7 +41,7 @@ CREATE TABLE `administrativo` (
 
 INSERT INTO `administrativo` (`DNIadministrativo`, `nombre`, `apellido`, `password`, `tipo_documento_idtipo_documento`) VALUES
 (10, 'Sebastian', 'Calderon', '321', 3),
-(12, 'Harold', 'Franco', '123', 1);
+(12, 'Harold', 'Franco', '123', 2);
 
 -- --------------------------------------------------------
 
@@ -52,8 +52,8 @@ INSERT INTO `administrativo` (`DNIadministrativo`, `nombre`, `apellido`, `passwo
 CREATE TABLE `equipo` (
   `idequipo` int(11) NOT NULL,
   `nombre` varchar(45) NOT NULL,
-  `cantidad` varchar(45) NOT NULL,
-  `nr.serie` varchar(45) NOT NULL
+  `cantidad` int(11) NOT NULL,
+  `cantidad_prestados` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -76,8 +76,9 @@ CREATE TABLE `estudiante` (
 --
 
 INSERT INTO `estudiante` (`DNIestudiante`, `nombre`, `apellido`, `password`, `programas_idprogramas`, `tipo_documento_idtipo_documento`) VALUES
-(12, 'Felipe', 'Jimenez', '152', 8, 1),
-(25, 'Julieth', 'Perdomo', '554', 3, 3);
+(8, 'Jaider', 'Avarez', '12345', 7, 2),
+(12, 'Felipe', 'Jimenez', '152', 8, 2),
+(25, 'Julieth', 'Perdomo ', '554', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -170,8 +171,8 @@ CREATE TABLE `tipo_documento` (
 --
 
 INSERT INTO `tipo_documento` (`idtipo_documento`, `nombre`) VALUES
-(0, 'Tarjeta de identidad'),
-(1, 'Cedula'),
+(1, 'Tarjeta de identidad'),
+(2, 'Cedula'),
 (3, 'Cedula de extranjeria');
 
 --
@@ -191,8 +192,7 @@ ALTER TABLE `administrativo`
 --
 ALTER TABLE `equipo`
   ADD PRIMARY KEY (`idequipo`),
-  ADD UNIQUE KEY `idequipo_UNIQUE` (`idequipo`),
-  ADD UNIQUE KEY `nr.serie_UNIQUE` (`nr.serie`);
+  ADD UNIQUE KEY `idequipo_UNIQUE` (`idequipo`);
 
 --
 -- Indices de la tabla `estudiante`
