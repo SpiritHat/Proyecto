@@ -58,6 +58,18 @@
 					</li>
 
 					<li class="sidebar-item">
+						<a class="sidebar-link" href="eliminarUsuario.php">
+              <i class="align-middle" data-feather="user-minus"></i> <span class="align-middle">Eliminar Estudiante</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="eliminarEmple.php">
+              <i class="align-middle" data-feather="user-minus"></i> <span class="align-middle">Eliminar Administrativo</span>
+            </a>
+					</li>
+
+					<li class="sidebar-item">
 						<a class="sidebar-link" href="pages-blank.html">
               <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
             </a>
@@ -362,22 +374,22 @@
 					<div class="row text-muted">
 						<div class="col-6 text-start">
 							<p class="mb-0">
-								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>Cotecnova</strong></a> &copy;
+								<a class="text-muted" href="https://adminkit.io/" target="_blank"><strong>COTECNOVA</strong></a> &copy;
 							</p>
 						</div>
 						<div class="col-6 text-end">
 							<ul class="list-inline">
 								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Support</a>
+									<a class="text-muted" href="https://www.cotecnova.edu.co" target="_blank">Cotecnova</a>
 								</li>
 								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Help Center</a>
+									<a class="text-muted" href="http://www.avaco.appcotecnova.es" target="_blank">Avaco</a>
 								</li>
 								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Privacy</a>
+									<a class="text-muted" href="https://www.cotecnova.edu.co/index.php/library/" target="_blank">Biblioteca</a>
 								</li>
 								<li class="list-inline-item">
-									<a class="text-muted" href="https://adminkit.io/" target="_blank">Terms</a>
+									<a class="text-muted" href="https://www.cotecnova.edu.co/index.php/contactenos/" target="_blank">Contáctenos</a>
 								</li>
 							</ul>
 						</div>

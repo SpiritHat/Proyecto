@@ -24,9 +24,15 @@ $mysql->desconectar();
 
  ?>
 
-  <head>
+ <head>
     <META HTTP-EQUIV="REFRESH" CONTENT="3;URL=../inicioAdmon.php">
+    <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
     <center>
-        <div><b>Usuario creado Correctamente!</b> Serás redirigido automáticamente.</div>
+        <div class="alert alert-success"><b>Estudiante creado correctamente!</b> Serás redirigido automáticamente.</div>
     </center>
 </head>
+<?php
+        }
+        else{
+            echo "ecurrio un error";
+        }
