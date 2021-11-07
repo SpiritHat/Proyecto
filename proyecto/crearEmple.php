@@ -1,14 +1,10 @@
 <?php
-//se llama la clase
 require_once 'modelo/mysql.php';
-//se intancia la clase
 $mysql = new MySQL;
-//se utiliza el metodo conectar
 $mysql->conectar();
-//se ejcucta y guarda la consulta en la variable llamada consulta
 $consulta = $mysql->efectuarConsulta("SELECT * FROM recepcion.tipo_documento");
 $mysql->desconectar();
-  ?>
+?>
 
 
 <!DOCTYPE html>
