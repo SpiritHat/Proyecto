@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2021 a las 14:39:06
--- Versión del servidor: 10.4.20-MariaDB
--- Versión de PHP: 8.0.8
+-- Tiempo de generación: 08-11-2021 a las 01:11:44
+-- Versión del servidor: 10.4.19-MariaDB
+-- Versión de PHP: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -56,6 +56,18 @@ CREATE TABLE `equipo` (
   `cantidad_prestados` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `equipo`
+--
+
+INSERT INTO `equipo` (`idequipo`, `nombre`, `cantidad`, `cantidad_prestados`) VALUES
+(1, 'Teclado', 10, 0),
+(2, 'Videobeam', 5, 0),
+(3, 'Mouse', 20, 0),
+(4, 'Computadores', 100, 0),
+(5, 'Extension', 20, 0),
+(6, 'Equipo de sonido', 5, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -90,11 +102,18 @@ CREATE TABLE `prestamo` (
   `idprestamo` int(11) NOT NULL,
   `Estudiante_CC` int(11) NOT NULL,
   `equipo_idequipo` int(11) NOT NULL,
-  `administrativo_CC` int(11) NOT NULL,
+  `administrativo_CC` int(11) DEFAULT NULL,
   `fecha_recibe` datetime NOT NULL,
-  `fecha_entrega` datetime NOT NULL,
+  `fecha_entrega` datetime DEFAULT NULL,
   `observaciones` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `prestamo`
+--
+
+INSERT INTO `prestamo` (`idprestamo`, `Estudiante_CC`, `equipo_idequipo`, `administrativo_CC`, `fecha_recibe`, `fecha_entrega`, `observaciones`) VALUES
+(1, 12, 6, NULL, '2021-11-08 00:01:53', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -171,9 +190,11 @@ CREATE TABLE `tipo_documento` (
 --
 
 INSERT INTO `tipo_documento` (`idtipo_documento`, `nombre`) VALUES
-(1, 'Tarjeta de identidad'),
-(2, 'Cedula'),
-(3, 'Cedula de extranjeria');
+(1, 'Tarjeta de Identidad'),
+(2, 'Cedula de Ciudadanía'),
+(3, 'Cedula de Extranjería'),
+(4, 'Pasaporte'),
+(5, 'Registro Civil');
 
 --
 -- Índices para tablas volcadas
@@ -256,13 +277,13 @@ ALTER TABLE `tipo_documento`
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `idequipo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idequipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  MODIFY `idprestamo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idprestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `programas`

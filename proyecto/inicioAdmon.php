@@ -2,12 +2,16 @@
 require_once 'modelo/mysql.php';
 $mysql2 = new MySQL;
 $mysql = new MySQL;
+$mysql3 = new MySQL;
 $mysql->conectar();
 $mysql2->conectar();
+$mysql3->conectar();
 $consulta = $mysql->efectuarConsulta("SELECT * FROM recepcion.equipo");
-$consulta2 = $mysql2->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad) FROM recepcion.equipo");
+$consulta2 = $mysql2->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad)AS total FROM recepcion.equipo");
+$consulta3 = $mysql3->efectuarConsulta("SELECT COUNT(recepcion.estudiante.DNIestudiante)AS totalEstu FROM recepcion.estudiante");
 $mysql->desconectar();
 $mysql2->desconectar();
+$mysql3->desconectar();
 ?>
 
 <!DOCTYPE html>
@@ -109,22 +113,6 @@ $mysql2->desconectar();
               <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
             </a>
 					</li>
-
-					<li class="sidebar-header">
-						Plugins & Addons
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="charts-chartjs.html">
-              <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
-            </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="maps-google.html">
-              <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
-            </a>
-					</li>
 				</ul>
 			</div>
 		</nav>
@@ -146,11 +134,7 @@ $mysql2->desconectar();
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"/> <span class="text-dark">Charles Hall</span>
               </a>
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="inicioAdmon.html"><i class="align-middle me-1" data-feather="settings"></i> Configuracion</a>
-								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
+							<div class="dropdown-menu dropdown-menu-end">							<a class="dropdown-item" href="http://www.sqr.appcotecnova.es"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="index.html">Cerrar sesion</a>
 							</div>
@@ -182,7 +166,11 @@ $mysql2->desconectar();
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">"Total de estudiantes"</h1>
+												<h1 class="mt-1 mb-3">
+													<?php while ($row = mysqli_fetch_array($consulta3)) { ?>
+                    						<?php echo $row['totalEstu'] ?>	
+                						<?php } ?>
+												</h1>
 											</div>
 										</div>
 										<div class="card">
@@ -217,7 +205,9 @@ $mysql2->desconectar();
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3">
-													"Total equipos"
+													<?php while ($row = mysqli_fetch_array($consulta2)) { ?>
+                    						<?php echo $row['total'] ?>	
+                						<?php } ?>
 												</h1>
 											</div>
 										</div>
@@ -225,16 +215,16 @@ $mysql2->desconectar();
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">libre</h5>
+														<h5 class="card-title">Equipos disponibles</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="info"></i>
+															<i class="align-middle" data-feather="monitor"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">Espacio libre</h1>
+												<h1 class="mt-1 mb-3">"Equipo que no estan prestados"</h1>
 											</div>
 										</div>
 									</div>
@@ -246,7 +236,7 @@ $mysql2->desconectar();
 							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Recent Movement</h5>
+									<h5 class="card-title mb-0">Prestamos recientes</h5>
 								</div>
 								<div class="card-body py-3">
 									<div class="chart chart-sm">

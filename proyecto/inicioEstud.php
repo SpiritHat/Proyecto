@@ -1,3 +1,15 @@
+<?php
+require_once 'modelo/mysql.php';
+$mysql = new MySQL;
+$mysql->conectar();
+$consulta = $mysql->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad)AS total FROM recepcion.equipo");
+$mysql->desconectar();
+$mysqlEquipo = new MySQL;
+$mysqlEquipo->conectar();
+$consultaEquipo = $mysqlEquipo->efectuarConsulta("SELECT * FROM recepcion.equipo");
+$mysqlEquipo->desconectar();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +38,7 @@
 		<div class="main">
 			
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
-				<img class="bi me-2" width="40" height="40" src="img/avatars/Iconocotecnova.png"></img>
+				<img class="bi me-2" width="40" height="40" src="img/avatars/Iconocotecnova.png">Estudiante</img>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						
@@ -35,11 +47,9 @@
 						
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark">Charles Hall</span>
+                 <span class="text-dark">Charles Hall</span>
               </a>
-							<div class="dropdown-menu dropdown-menu-end">
-								<a class="dropdown-item" href="pages-profile.html"><i class="align-middle me-1" data-feather="user"></i> Perfi</a>
-								<div class="dropdown-divider"></div>								<a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
+							<div class="dropdown-menu dropdown-menu-end">							<a class="dropdown-item" href="http://www.sqr.appcotecnova.es"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="index.html">Cerrar sesion</a>
 							</div>
@@ -51,7 +61,7 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3">Equipos Disponibles</h1>
+					<h1 class="h3 mb-3">Equipos disponibles</h1>
 
 					<div class="row">
 						<div class="col-xl-6 col-xxl-5 d-flex">
@@ -62,40 +72,54 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Sales</h5>
+														<h5 class="card-title">Teclado</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="truck"></i>
+															<i class="align-middle" data-feather="grid"></i>
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">2.382</h1>
-												<div class="mb-0">
-													<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -3.65% </span>
-													<span class="text-muted">Since last week</span>
-												</div>
+												<h1 class="mt-1 mb-3">
+													<?php while ($row = mysqli_fetch_array($consulta)) { ?>
+                    						<?php echo $row['total'] ?>	
+                						<?php } ?>
+												</h1>
 											</div>
 										</div>
 										<div class="card">
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Visitors</h5>
+														<h5 class="card-title">Videobeam</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="users"></i>
+															<i class="align-middle" data-feather="video"></i>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3">14.212</h1>
-												<div class="mb-0">
-													<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 5.25% </span>
-													<span class="text-muted">Since last week</span>
+												
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Equipos de sonido</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="speaker"></i>
+														</div>
+													</div>
 												</div>
+												<h1 class="mt-1 mb-3">64</h1>
+												
 											</div>
 										</div>
 									</div>
@@ -104,65 +128,96 @@
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Earnings</h5>
+														<h5 class="card-title">Mouse</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="dollar-sign"></i>
+															<i class="align-middle" data-feather="navigation"></i>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3">$21.300</h1>
-												<div class="mb-0">
-													<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>
-													<span class="text-muted">Since last week</span>
-												</div>
+												
 											</div>
 										</div>
 										<div class="card">
 											<div class="card-body">
 												<div class="row">
 													<div class="col mt-0">
-														<h5 class="card-title">Orders</h5>
+														<h5 class="card-title">Computadores</h5>
 													</div>
 
 													<div class="col-auto">
 														<div class="stat text-primary">
-															<i class="align-middle" data-feather="shopping-cart"></i>
+															<i class="align-middle" data-feather="monitor"></i>
 														</div>
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3">64</h1>
-												<div class="mb-0">
-													<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> -2.25% </span>
-													<span class="text-muted">Since last week</span>
-												</div>
+												
 											</div>
 										</div>
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col mt-0">
+														<h5 class="card-title">Extension</h5>
+													</div>
+
+													<div class="col-auto">
+														<div class="stat text-primary">
+															<i class="align-middle" data-feather="zap"></i>
+														</div>
+													</div>
+												</div>
+												<h1 class="mt-1 mb-3">64</h1>
+												
+											</div>
+										</div>
+										
 									</div>
 								</div>
 							</div>
-						</div>
 
-					</div>
-
-					<div class="row">
-						
-						<div class="col-12 col-md-12 col-xxl-6 d-flex order-3 order-xxl-2">
 						</div>
-						<div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
-							<div class="card flex-fill">
+							<div class="col-xl-6 col-xxl-7">
+							<div class="card flex-fill w-100">
 								<div class="card-header">
 
-									<h5 class="card-title mb-0">Calendar</h5>
+									<h5 class="card-title text-center">Realizar reserva</h5>
 								</div>
-								<div class="card-body d-flex">
-									<div class="align-self-center w-100">
-										<div class="chart">
-											<div id="datetimepicker-dashboard"></div>
+								<div class="card-body py-3">
+									<form action="#" method="POST">
+										<div class="mb-3">
+											<label class="form-label">DNI</label>
+											<input class="form-control form-control-lg" type="text" name="DNIestudiante" id="DNIestudiante" placeholder="Ingrese el numero de documento" />
 										</div>
-									</div>
+										<div class="mb-3">
+											<label class="form-label">Equipo</label>
+											<select name ="programas_idprogramas" class="form-select" aria-label="Default select example">
+
+       										<?php 
+         									while ($row = mysqli_fetch_array($consultaEquipo)) {
+ 											$id =  $row["idequipo"]; 
+             								$nombre = $row["nombre"]; 
+											?>
+											<option value="<?php echo $id; ?>"><?php  echo $nombre;  ?></option>
+  											<?php } ?>
+    										</select>
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Fecha</label>
+											<input class="form-control form-control-lg" type="date" name="fecha" id="fecha"/>
+										</div>
+										<div class="mb-3">
+											<label class="form-label">Hora</label>
+											<input class="form-control form-control-lg" type="time" name="hora" id="hora"/>
+										</div>
+										<div class="text-center mt-3">
+											<button type="submit" class="btn btn-lg btn-success dissable" disabled>Registrar datos</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -203,19 +258,6 @@
 	</div>
 
 	<script src="js/app.js"></script>
-
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
-			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
-			document.getElementById("datetimepicker-dashboard").flatpickr({
-				inline: true,
-				prevArrow: "<span title=\"Previous month\">&laquo;</span>",
-				nextArrow: "<span title=\"Next month\">&raquo;</span>",
-				defaultDate: defaultDate
-			});
-		});
-	</script>
 
 </body>
 
