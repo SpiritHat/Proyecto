@@ -1,17 +1,31 @@
 <?php
-require_once 'modelo/mysql.php';
-$mysql2 = new MySQL;
+
+
+require 'modelo/mysql.php';
+$mysql = new Mysql();
+require 'modelo/usuarios.php';
+$user = new Usuario();
+ 
+
+
+session_start();
+     $usuario = $_SESSION['usuario'];
+    $acceso = $_SESSION['acceso'];
+    if($usuario == '' && $usuario == null &&
+       $acceso == '' && $acceso == null){
+        header("Location: index.html");
+    } 
+
+
 $mysql = new MySQL;
-$mysql3 = new MySQL;
+
 $mysql->conectar();
-$mysql2->conectar();
-$mysql3->conectar();
+
 $consulta = $mysql->efectuarConsulta("SELECT * FROM recepcion.equipo");
-$consulta2 = $mysql2->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad)AS total FROM recepcion.equipo");
-$consulta3 = $mysql3->efectuarConsulta("SELECT COUNT(recepcion.estudiante.DNIestudiante)AS totalEstu FROM recepcion.estudiante");
+$consulta2 = $mysql->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad)AS total FROM recepcion.equipo");
+$consulta3 = $mysql->efectuarConsulta("SELECT COUNT(recepcion.estudiante.DNIestudiante)AS totalEstu FROM recepcion.estudiante");
+
 $mysql->desconectar();
-$mysql2->desconectar();
-$mysql3->desconectar();
 ?>
 
 <!DOCTYPE html>
@@ -132,11 +146,20 @@ $mysql3->desconectar();
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1"/> <span class="text-dark">Charles Hall</span>
+                <img src="img/avatars/Iconocotecnova.png" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?php
+
+echo $usuario -> getNombre();
+echo " ";
+echo $usuario -> getApellido();
+
+ 
+
+                ?>
+                </span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">							<a class="dropdown-item" href="http://www.sqr.appcotecnova.es"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="index.html">Cerrar sesion</a>
+								<a class="dropdown-item" href="controlador/loginOut.php">Cerrar sesion</a>
 							</div>
 						</li>
 					</ul>
