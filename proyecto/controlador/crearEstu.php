@@ -24,7 +24,7 @@ $mysql->desconectar();
 
  ?>
 
- <head>
+<head>
     <META HTTP-EQUIV="REFRESH" CONTENT="3;URL=../inicioAdmon.php">
     <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.css">
     <center>

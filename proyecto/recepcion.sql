@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2021 a las 01:11:44
+-- Tiempo de generación: 11-11-2021 a las 02:54:01
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -113,7 +113,9 @@ CREATE TABLE `prestamo` (
 --
 
 INSERT INTO `prestamo` (`idprestamo`, `Estudiante_CC`, `equipo_idequipo`, `administrativo_CC`, `fecha_recibe`, `fecha_entrega`, `observaciones`) VALUES
-(1, 12, 6, NULL, '2021-11-08 00:01:53', NULL, NULL);
+(1, 12, 6, 10, '2021-11-08 00:01:53', '2021-11-09 19:41:28', 'Desgasto en el cable a corriente y perrilla de volumen dañada'),
+(3, 25, 2, NULL, '2021-11-15 23:38:00', NULL, NULL),
+(4, 25, 1, NULL, '2021-11-17 11:47:00', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -283,7 +285,7 @@ ALTER TABLE `equipo`
 -- AUTO_INCREMENT de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  MODIFY `idprestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idprestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `programas`

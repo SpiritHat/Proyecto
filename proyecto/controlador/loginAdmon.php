@@ -22,33 +22,24 @@ if (mysqli_num_rows($consulta) > 0){
         
 
 
-         //recorrame los datos de la consulta
        while ($resultado= mysqli_fetch_assoc($consulta)){
        $nombre= $resultado["nombre"];
       $DNI= $resultado["DNIadministrativo"];
       $apellido=$resultado["apellido"];
 
 
-    // setters del modelo consulta - agregar al modelo consulta los datos que necesito
              $usuario->setNombre($nombre);
              $usuario->setDNI($DNI);
              $usuario->setApellido($apellido);
              
        }
 
-       //parametros de inicio de sesión
         $_SESSION['usuario'] = $usuario;
         $_SESSION['acceso'] = true;
-        
-        //re dirige a la pagina principal
-        
     header("Location: ../inicioAdmon.php");
-       
     }
     else{
-
-      //me mantiene en la misma pagina
-     header("Location: ../index.html");
+     header("Location: ../loginAdmon.html");
     }
 
 

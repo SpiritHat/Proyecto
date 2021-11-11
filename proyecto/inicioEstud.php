@@ -1,13 +1,33 @@
 <?php
 require_once 'modelo/mysql.php';
 $mysql = new MySQL;
+require 'modelo/usuarios.php';
+$user = new Usuario();
+
+session_start();
+     $usuario = $_SESSION['usuario'];
+    $acceso = $_SESSION['acceso'];
+    if($usuario == '' && $usuario == null &&
+       $acceso == '' && $acceso == null){
+        header("Location: index.html");
+    } 
+
 $mysql->conectar();
 $consulta = $mysql->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad)AS total FROM recepcion.equipo");
+
+$consultaEquipo = $mysql->efectuarConsulta("SELECT * FROM recepcion.equipo");
+
+$consultaMouse = $mysql->efectuarConsulta("SELECT recepcion.equipo.cantidad AS totalM FROM recepcion.equipo WHERE recepcion.equipo.nombre='mouse';");
+$consultaTeclado = $mysql->efectuarConsulta("SELECT recepcion.equipo.cantidad AS totalT FROM recepcion.equipo WHERE recepcion.equipo.nombre='teclado';");
+
+$consultaVideo = $mysql->efectuarConsulta("SELECT recepcion.equipo.cantidad AS totalV FROM recepcion.equipo WHERE recepcion.equipo.nombre='videobeam';");
+
+$consultaPC = $mysql->efectuarConsulta("SELECT recepcion.equipo.cantidad AS totalPC FROM recepcion.equipo WHERE recepcion.equipo.nombre='computadores';");
+
+$consultaExten = $mysql->efectuarConsulta("SELECT recepcion.equipo.cantidad AS totalE FROM recepcion.equipo WHERE recepcion.equipo.nombre='extension';");
+
+$consultaSonido = $mysql->efectuarConsulta("SELECT recepcion.equipo.cantidad AS totalS FROM recepcion.equipo WHERE recepcion.equipo.nombre='equipo de sonido';");
 $mysql->desconectar();
-$mysqlEquipo = new MySQL;
-$mysqlEquipo->conectar();
-$consultaEquipo = $mysqlEquipo->efectuarConsulta("SELECT * FROM recepcion.equipo");
-$mysqlEquipo->desconectar();
 ?>
 
 <!DOCTYPE html>
@@ -47,11 +67,19 @@ $mysqlEquipo->desconectar();
 						
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                 <span class="text-dark">Charles Hall</span>
+                 <span class="text-dark"><?php
+
+echo $usuario -> getNombre();
+echo " ";
+echo $usuario -> getApellido();
+
+ 
+
+                ?></span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">							<a class="dropdown-item" href="http://www.sqr.appcotecnova.es"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
 								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="index.html">Cerrar sesion</a>
+								<a class="dropdown-item" href="controlador/loginOut.php">Cerrar sesion</a>
 							</div>
 						</li>
 					</ul>
@@ -82,8 +110,8 @@ $mysqlEquipo->desconectar();
 													</div>
 												</div>
 												<h1 class="mt-1 mb-3">
-													<?php while ($row = mysqli_fetch_array($consulta)) { ?>
-                    						<?php echo $row['total'] ?>	
+													<?php while ($row = mysqli_fetch_array($consultaTeclado)) { ?>
+                    						<?php echo $row['totalT'] ?>	
                 						<?php } ?>
 												</h1>
 											</div>
@@ -101,7 +129,9 @@ $mysqlEquipo->desconectar();
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">14.212</h1>
+												<h1 class="mt-1 mb-3"><?php while ($row = mysqli_fetch_array($consultaVideo)) { ?>
+                    						<?php echo $row['totalV'] ?>	
+                						<?php } ?></h1>
 												
 											</div>
 										</div>
@@ -118,7 +148,9 @@ $mysqlEquipo->desconectar();
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">64</h1>
+												<h1 class="mt-1 mb-3"><?php while ($row = mysqli_fetch_array($consultaSonido)) { ?>
+                    						<?php echo $row['totalS'] ?>	
+                						<?php } ?></h1>
 												
 											</div>
 										</div>
@@ -137,7 +169,9 @@ $mysqlEquipo->desconectar();
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">$21.300</h1>
+												<h1 class="mt-1 mb-3"><?php while ($row = mysqli_fetch_array($consultaMouse)) { ?>
+                    						<?php echo $row['totalM'] ?>	
+                						<?php } ?></h1>
 												
 											</div>
 										</div>
@@ -154,7 +188,9 @@ $mysqlEquipo->desconectar();
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">64</h1>
+												<h1 class="mt-1 mb-3"><?php while ($row = mysqli_fetch_array($consultaPC)) { ?>
+                    						<?php echo $row['totalPC'] ?>	
+                						<?php } ?></h1>
 												
 											</div>
 										</div>
@@ -171,7 +207,9 @@ $mysqlEquipo->desconectar();
 														</div>
 													</div>
 												</div>
-												<h1 class="mt-1 mb-3">64</h1>
+												<h1 class="mt-1 mb-3"><?php while ($row = mysqli_fetch_array($consultaExten)) { ?>
+                    						<?php echo $row['totalE'] ?>	
+                						<?php } ?></h1>
 												
 											</div>
 										</div>
@@ -188,15 +226,15 @@ $mysqlEquipo->desconectar();
 									<h5 class="card-title text-center">Realizar reserva</h5>
 								</div>
 								<div class="card-body py-3">
-									<form action="#" method="POST">
+									<form action="controlador/crearReserva.php" method="POST">
 										<div class="mb-3">
-											<label class="form-label">DNI</label>
+											<label class="form-label">Numero de documento</label>
 											<input class="form-control form-control-lg" type="text" name="DNIestudiante" id="DNIestudiante" placeholder="Ingrese el numero de documento" />
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Equipo</label>
-											<select name ="programas_idprogramas" class="form-select" aria-label="Default select example">
-
+											<select name ="IDequipo" class="form-select" aria-label="Default select example">
+											<option>Equipo a reservar</option>
        										<?php 
          									while ($row = mysqli_fetch_array($consultaEquipo)) {
  											$id =  $row["idequipo"]; 
@@ -215,7 +253,7 @@ $mysqlEquipo->desconectar();
 											<input class="form-control form-control-lg" type="time" name="hora" id="hora"/>
 										</div>
 										<div class="text-center mt-3">
-											<button type="submit" class="btn btn-lg btn-success dissable" disabled>Registrar datos</button>
+											<button type="submit" class="btn btn-lg btn-success">Registrar datos</button>
 										</div>
 									</form>
 								</div>

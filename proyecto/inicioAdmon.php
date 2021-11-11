@@ -24,7 +24,21 @@ $mysql->conectar();
 $consulta = $mysql->efectuarConsulta("SELECT * FROM recepcion.equipo");
 $consulta2 = $mysql->efectuarConsulta("SELECT SUM(recepcion.equipo.cantidad)AS total FROM recepcion.equipo");
 $consulta3 = $mysql->efectuarConsulta("SELECT COUNT(recepcion.estudiante.DNIestudiante)AS totalEstu FROM recepcion.estudiante");
-
+$consultaR=$mysql->efectuarConsulta("SELECT
+    recepcion.prestamo.idprestamo,
+    recepcion.estudiante.nombre AS nombreES,
+    recepcion.estudiante.apellido AS apellidoES,
+    recepcion.equipo.nombre AS nombreEQ,
+    recepcion.administrativo.nombre AS nombreAD,
+    recepcion.administrativo.apellido AS apellidoAD,
+    recepcion.prestamo.fecha_recibe,
+    recepcion.prestamo.fecha_entrega,
+    recepcion.prestamo.observaciones
+FROM
+    recepcion.prestamo
+LEFT JOIN recepcion.estudiante ON recepcion.prestamo.Estudiante_CC = recepcion.estudiante.DNIestudiante
+LEFT JOIN recepcion.equipo ON recepcion.prestamo.equipo_idequipo = recepcion.equipo.idequipo
+LEFT JOIN recepcion.administrativo ON recepcion.prestamo.administrativo_CC = recepcion.administrativo.DNIadministrativo WHERE recepcion.prestamo.administrativo_CC IS NULL AND recepcion.prestamo.fecha_entrega IS NULL;");
 $mysql->desconectar();
 ?>
 
@@ -146,15 +160,7 @@ $mysql->desconectar();
               </a>
 
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
-                <img src="img/avatars/Iconocotecnova.png" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?php
-
-echo $usuario -> getNombre();
-echo " ";
-echo $usuario -> getApellido();
-
- 
-
-                ?>
+                <img src="img/avatars/Iconocotecnova.png" class="avatar img-fluid rounded me-1"/> <span class="text-dark"><?php echo $usuario -> getNombre();echo " ";echo $usuario -> getApellido();?>
                 </span>
               </a>
 							<div class="dropdown-menu dropdown-menu-end">							<a class="dropdown-item" href="http://www.sqr.appcotecnova.es"><i class="align-middle me-1" data-feather="help-circle"></i> Ayuda</a>
@@ -271,7 +277,47 @@ echo $usuario -> getApellido();
 					</div>
 
 					<div class="row">
+						<div>
+								<div class="card flex-fill">
+								<div class="card-header">
+
+									<h5 class="card-title mb-0">Equipos reservados</h5>
+								</div>
+								<table class="table table-hover my-0">
+									<thead>
+										<tr>
+											<th>ID</th>
+											<th>Estudiante</th>
+											<th>Equipo</th>
+											<th>Encargado</th>
+											<th>Fecha de entrega</th>
+											<th>Fecha de Devolucion</th>	
+											<th>Observaciones</th>
+											<th>Editar</th>								
+										</tr>
+									</thead>
+									<tbody>
+										<?php while ($row = mysqli_fetch_array($consultaR)) { ?>
+                  						<tr>
+                    						<td><?php echo $row['idprestamo'] ?></td>
+                    						<td><?php echo $row['nombreES']." ".$row['apellidoES'] ?></td>
+                    						<td><?php echo $row['nombreEQ'] ?></td>
+                    						<td><?php echo $row['nombreAD']." ".$row['apellidoAD'] ?></td>
+                    						<td><?php echo $row['fecha_recibe'] ?></td>
+                    						<td><?php echo $row['fecha_entrega'] ?></td>
+                    						<td><?php echo $row['observaciones'] ?></td>
+                    						<td><button class="btn btn-lg btn-success" disabled>Editar datos</button></td>
+                   						</tr>
+                						<?php } ?>
+									</tbody>
+								</table>
+							</div>
+					</div>
+
+					<div class="row">
+
 						<div class="col-12 col-lg-8 col-xxl-9 d-flex">
+
 							<div class="card flex-fill">
 								<div class="card-header">
 
@@ -281,7 +327,7 @@ echo $usuario -> getApellido();
 									<thead>
 										<tr>
 											<th>ID</th>
-											<th class="d-none d-xl-table-cell">Nombre</th>
+											<th>Nombre</th>
 											<th>Disponibles</th>
 											<th>Prestados</th>										
 										</tr>
@@ -300,7 +346,7 @@ echo $usuario -> getApellido();
 							</div>
 						</div>
 						
-						<div class="col-12 col-md-6 col-xxl-3 d-flex order-1 order-xxl-1">
+						<div class="col-12 col-sm-4 col-xxl-3 d-flex order-1 order-xxl-1">
 							<div class="card flex-fill">
 								<div class="card-header">
 
@@ -315,9 +361,11 @@ echo $usuario -> getApellido();
 								</div>
 							</div>
 						</div>
+
 					</div>
 
-				</div>
+
+								
 			</main>
 
 			<footer class="footer">
@@ -425,7 +473,6 @@ echo $usuario -> getApellido();
 				inline: true,
 				prevArrow: "<span title=\"Previous month\">&laquo;</span>",
 				nextArrow: "<span title=\"Next month\">&raquo;</span>",
-				defaultDate: defaultDate
 			});
 		});
 	</script>
